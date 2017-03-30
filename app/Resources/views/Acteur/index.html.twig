@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+     <a href="{{ path('acteur.ajout') }}" class="btn btn-default">Ajout Acteur</a>
+    <h4 class="page-header"> Liste des Acteurs </h4>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Date naissance</th>
+            <th>Sexe</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for acteur in acteurs %}
+            <tr>
+                <td>{{ acteur.nom }}</td>
+                <td>{{ acteur.prenom }}</td>
+                <td>{{ acteur.datenaissance|date("m/d/Y") }}</td>
+                <td>{{ acteur.sexe }}</td>
+                <td>
+                    <a href="{{ path('acteur.edit' , {id : acteur.id} ) }}" class="btn btn-success">Edit</a> |
+                    <a href="{{ path('acteur.delete', {id : acteur.id}) }}" class="btn btn-danger">Supprime</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <a href="{{ path('film_index') }}" class="btn btn-default">Retour liste</a>
+    <h1>Creation de film</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input type="submit" value="Ajouter" class="btn btn-success" style="margin-top: 10px" />
+    {{ form_end(form) }}
+
+{% endblock %}

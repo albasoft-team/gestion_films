@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <a href="{{ path('acteur.list') }}" class="btn btn-default">Retour liste</a>
+    <h4 class="page-header"> Ajouter un acteur </h4>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}
+

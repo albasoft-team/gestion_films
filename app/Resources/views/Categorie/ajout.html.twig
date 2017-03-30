@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <a href="{{ path('categorie.list') }}" class="btn btn-default">Retour Liste</a>
+   <h3 class="page-header">Ajout de categorie</h3>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}
