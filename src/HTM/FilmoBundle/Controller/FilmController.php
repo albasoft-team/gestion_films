@@ -5,7 +5,9 @@ namespace HTM\FilmoBundle\Controller;
 use HTM\FilmoBundle\Entity\Film;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * Film controller.
@@ -45,6 +47,9 @@ class FilmController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $file = $film->getBrochure();
+            $fileName = $this->get('app.brochure_uploader')->upload($file);
+            $film->setBrochure($fileName);
             $em->persist($film);
             $em->flush($film);
 
@@ -81,7 +86,10 @@ class FilmController extends Controller
      */
     public function editAction(Request $request, Film $film)
     {
-        $deleteForm = $this->createDeleteForm($film);
+//        $deleteForm = $this->createDeleteForm($film);
+        $film->setBrochure(
+            new File($this->getParameter('brochures_directory').'/'.$film->getBrochure())
+        );
         $editForm = $this->createForm('HTM\FilmoBundle\Form\FilmType', $film);
         $editForm->handleRequest($request);
 
@@ -93,8 +101,7 @@ class FilmController extends Controller
 
         return $this->render('film/edit.html.twig', array(
             'film' => $film,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form' => $editForm->createView()
         ));
     }
 

@@ -3,6 +3,7 @@
 namespace HTM\FilmoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Film
@@ -48,6 +49,15 @@ class Film
      * @ORM\JoinTable(name="Film_Acteur")
      */
     private $acteur;
+
+    /**
+     * @ORM\Column(type="string")
+     *
+     * @Assert\NotBlank(message="Please, upload the product brochure as a PDF file.")
+     *
+     */
+    private $brochure;
+
     /**
      * Get id
      *
@@ -169,5 +179,16 @@ class Film
     public function getActeur()
     {
         return $this->acteur;
+    }
+    public function getBrochure()
+    {
+        return $this->brochure;
+    }
+
+    public function setBrochure($brochure)
+    {
+        $this->brochure = $brochure;
+
+        return $this;
     }
 }

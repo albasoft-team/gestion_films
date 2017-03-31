@@ -10,4 +10,15 @@ namespace HTM\FilmoBundle\Repository;
  */
 class CategorieRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @return mixed
+     */
+    public function getCategories()
+    {
+        return $this->createQueryBuilder("p")
+            ->select("p")
+            ->orderBy("p.nom","ASC")
+            ->getQuery()
+            ->getResult();
+    }
 }

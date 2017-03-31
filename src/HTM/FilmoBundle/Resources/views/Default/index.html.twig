@@ -1,7 +1,67 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <p>
-        Bienvenu Mes chers !!!
-    </p>
+
+    <div class="row">
+
+        <div  class="col-md-3">
+            <h3 class="page-header">Les categories</h3>
+            <ul class="list-group">
+                {% for categorie in categories %}
+                  <li class="list-group-item">{{ categorie.nom }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-9">
+            <h3 class="page-header">Les films</h3>
+            <div class="row">
+                {% for film in films %}
+                    <div class="col-sm-4 col-lg-4 col-md-4">
+                        <div class="thumbnail">
+                            <a href="{{ path('film_show', {'id': film.id}) }}">
+                                <img style="height: 200px;width: 100%;"  src="{{ asset('uploads/brochures/' ~ film.brochure) }}" alt="Card image cap">
+                            </a>
+                            <div class="caption">
+                                <h4 class="pull-right">{{ film.categorie.nom }}</h4>
+                                <h4><a href="{{ path('film_show', {id: film.id }) }}">{{ film.titre }}</a></h4>
+                                <p class="card-text">{{ film.description }}</p>
+                            </div>
+                            <div class="ratings">
+                                <p class="pull-right">12 reviews</p>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                    {#<div class="card-deck">#}
+                    {#{% for film in films %}#}
+                    {#<div class="card">#}
+                    {#<img style="height: 200px;width: 100%;display: block;"  height="200" width="100" class="card-img-top" src="{{ asset('uploads/brochures/' ~ film.brochure) }}" alt="Card image cap">#}
+                    {#<div class="card-block">#}
+                    {#<h6 class="card-title pull-right">{{ film.categorie.nom }}</h6>#}
+                    {#<h6 class="card-title"><a href="{{ path('film_show', {id: film.id }) }}">{{ film.titre }}</a></h6>#}
+                    {#<p class="card-text">{{ film.description }}</p>#}
+                    {#<p class="card-text">#}
+                    {#<span class="glyphicon glyphicon-star" aria-hidden="true"></span>#}
+                    {#<span class="glyphicon glyphicon-star" aria-hidden="true"></span>#}
+                    {#<span class="glyphicon glyphicon-star" aria-hidden="true"></span>#}
+                    {#<span class="glyphicon glyphicon-star" aria-hidden="true"></span>#}
+                    {#<span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>#}
+                    {#</p>#}
+                    {#</div>#}
+                    {#</div>#}
+                    {#{% endfor %}#}
+                    {#</div>#}
+                {% endfor %}
+                <div class="navigation">
+                    {{ knp_pagination_render(films) }}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
