@@ -9,7 +9,9 @@
 namespace HTM\FilmoBundle\Controller;
 
 
+use HTM\FilmoBundle\Entity\Acteur;
 use HTM\FilmoBundle\Entity\Categorie;
+use HTM\FilmoBundle\Form\CategorieType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -64,9 +66,22 @@ class CategorieController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
 
-    public function editAction ($id, Request $request)
+    public function editAction (Request $request, Categorie $categorie)
     {
-        return $this->render('Categorie/edit.html.twig');
+        $form = $this->createForm(CategorieType::class, $categorie);
+        $form->add('Modifier', SubmitType::class, array('attr' => array('class' => 'btn btn-success', 'style' => 'margin-top:10px')));
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            $this->addFlash('notice','Modification succes');
+            return $this->redirectToRoute('categorie.list');
+        }
+        return $this->render('Categorie/edit.html.twig', array(
+            'form' => $form->createView(),
+            'categorie' => $categorie
+        ));
     }
 
     /**
@@ -76,7 +91,18 @@ class CategorieController extends Controller
 
     public function deleteAction ($id, Request $request)
     {
-        return $this->render('Categorie/delete.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $categorie = $em->getRepository('HTMFilmoBundle:Categorie')->find($id);
+        if (!$categorie) {
+            throw $this->createNotFoundException(
+                'Categorie non trouve pour id '.$id
+            );
+        }
+        $em->remove($categorie);
+        $em->flush();
+        $this->addFlash('notice','Suppression de l\'acteur reussi');
+        return $this->redirectToRoute('categorie.list');
     }
+
 
 }

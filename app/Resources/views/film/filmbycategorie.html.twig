@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h3 class="page-header">Les films de la categorie {{ cat.nom }}</h3>
+    <div class="row">
+        {% for film in films %}
+            <div class="col-sm-4 col-lg-4 col-md-4">
+                <div class="thumbnail">
+                    <a href="{{ path('film_show', {'id': film.id}) }}">
+                        <img style="height: 200px;width: 100%;"  src="{{ asset('uploads/brochures/' ~ film.brochure) }}" alt="Card image cap">
+                    </a>
+                    <div class="caption">
+                        <h4 class="pull-right">{{ film.categorie.nom }}</h4>
+                        <h4><a href="{{ path('film_show', {id: film.id }) }}">{{ film.titre }}</a></h4>
+                        <p class="card-text">{{ film.description }}</p>
+                    </div>
+                    <div class="ratings">
+                        <p class="pull-right">12 reviews</p>
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    </div>
+
+{% endblock %}

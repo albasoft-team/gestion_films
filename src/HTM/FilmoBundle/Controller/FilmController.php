@@ -3,6 +3,7 @@
 namespace HTM\FilmoBundle\Controller;
 
 use HTM\FilmoBundle\Entity\Film;
+use HTM\FilmoBundle\Entity\Categorie;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -139,5 +140,24 @@ class FilmController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+    /**
+     * @Route("/categorie/{nom}", name="film_by_categorie")
+     * @param Request $request
+     * @param Categorie $categorie
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function filmsOfcategorieAction(Categorie $categorie)
+    {
+       // $em = $this->getDoctrine()->getManager();
+//        $categorie = $em->getRepository("HTMFilmoBundle:Categorie")
+//            ->findBy(array('non' => $nom));
+        $cats = $this->getDoctrine()->getRepository("HTMFilmoBundle:Film");
+        $films = $cats->getFilmsByCategorie($categorie);
+        return $this->render('film/filmbycategorie.html.twig', array(
+            'films' => $films,
+            'cat' => $categorie
+        ));
     }
 }

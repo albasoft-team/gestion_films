@@ -8,7 +8,10 @@
             <h3 class="page-header">Les categories</h3>
             <ul class="list-group">
                 {% for categorie in categories %}
-                  <li class="list-group-item">{{ categorie.nom }}</li>
+                    <a href="{{ path('film_by_categorie', {'nom': categorie.nom}) }}">
+                        <li class="list-group-item">{{ categorie.nom }}</li>
+                    </a>
+
                 {% endfor %}
             </ul>
         </div>

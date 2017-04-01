@@ -10,4 +10,14 @@ namespace HTM\FilmoBundle\Repository;
  */
 class FilmRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getFilmsByCategorie($categorie){
+        $query = $this->createQueryBuilder('f')
+           ->where('f.categorie = :categorie')
+           ->setParameter('categorie', $categorie)
+           ->orderBy('f.titre', 'ASC')
+           ->getQuery();
+
+       $films = $query->getResult();
+       return $films;
+    }
 }
